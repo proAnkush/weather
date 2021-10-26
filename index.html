@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="style.css">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Weather</title>
+        <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,400&display=swap" rel="stylesheet" />
+        <meta name="description" content="Weather project">
+        <meta name="keywords" content="HTML, CSS, JavaScript, Open Weather API">
+        <meta name="author" content="Ankush Patil">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/logo_60x60.png" sizes="60x60" type="image/png">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Merienda&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </head>
+<body>
+    <div id="topbar">
+        <ul style="list-style: none;" id="navList">
+            <li id="logo"><img src="https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png" alt="logo" ></li>
+            <li id="form" style="background-color: white; ">
+                <input id="cityInput" type="text" style="border: 0px; font-size: 24px; padding: 6px; padding-left: 16px;" name="city" placeholder="Weather of your city">
+                <button id="goFetch" style="border:0px; background: white; margin-left: 0; color: black; padding: 6px;"> <i class="fa fa-search" style="font-size: 24px;" aria-hidden="true"></i> </button>
+            </li>
+            <li>
+                <button id="metricSwitch" style="font-size: 24px; border: 0px;">C &deg;/ F &deg;</button>
+            </li>
+        </ul>
+    </div>
+    <div id="dynamicMain">
+        <div id="dateTime">Date/Time</div>
+        <div id="cityState">City, State</div>
+        <div id="currTemp"><img id="cTimg" src="http://openweathermap.org/img/wn/10d@2x.png" style="width: 50px; height: 50px;"> <span id="tempValue">10 &deg; C</span></div>
+        <div id="extraInfo" style="font-size: 20px; font-weight: bold;">Feels like 10°C. Scattered clouds. Gentle Breeze</div>
+        <div id="moreExtra">
+            Humidity:95%
+            UV:0
+            Dew point:9°C
+            Visibility:10.0km
+        </div>
+    </div>
+    <script src="/script.js"></script>
+</body>
+</html>

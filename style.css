@@ -1,0 +1,53 @@
+body{
+    margin: 0;
+}
+:root{
+    --main-theme-col: darkslategrey;
+    --sec-theme-col: white;
+}
+#topbar{
+    font-size: 30px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background-color: var(--main-theme-col);
+    color: var(--sec-theme-col);
+}
+#navList{
+    align-self: flex-start;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+#logo > img{
+    width: 100px;
+}
+#form{
+    padding: none;
+}
+#dynamicMain{
+    width: 60%;
+    margin: auto;
+    border-left: 2px dashed blue;
+    border-right: 2px dashed blue;
+    padding: 30px;
+}
+#dateTime{
+    font-size: 35px;
+    color: orangered;
+}
+#cityState{
+    font-size: 50px;
+    text-transform: capitalize;
+}
+#currTemp{
+    font-size: 40px;
+}
