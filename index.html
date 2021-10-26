@@ -30,15 +30,32 @@
         </ul>
     </div>
     <div id="dynamicMain">
-        <div id="dateTime">Date/Time</div>
-        <div id="cityState">City, State</div>
-        <div id="currTemp"><img id="cTimg" src="http://openweathermap.org/img/wn/10d@2x.png" style="width: 50px; height: 50px;"> <span id="tempValue">10 &deg; C</span></div>
-        <div id="extraInfo" style="font-size: 20px; font-weight: bold;">Feels like 10°C. Scattered clouds. Gentle Breeze</div>
-        <div id="moreExtra">
-            Humidity:95%
-            UV:0
-            Dew point:9°C
-            Visibility:10.0km
+        <div id="cards">
+            <div class="card">
+                <div id="dateTime">Date/Time</div>
+                <div id="cityState">City, State</div>
+                <div id="currTemp"><img id="cTimg" src="http://openweathermap.org/img/wn/10d@2x.png" style="width: 60px; height: 60px;"> <span id="tempValue">10 &deg; C</span></div>
+                <div id="extraInfo" style="font-size: 20px; font-weight: bold;">Feels like 10°C. Scattered clouds. Gentle Breeze</div>
+                <div id="moreExtra">
+                    Humidity:95%
+                    UV:0
+                    Dew point:9°C
+                    Visibility:10.0km
+                </div>
+            </div>
+            <div class="card">
+                <h2 style="font-size: 24px;">Wind</h2>
+                <div id="windStats">
+                        
+                    <div> <i class="fa fa-wind" style="font-size: 20px; padding-right: 10px;" aria-hidden="true"></i><span id="spdWind">1.5m/s</span> 
+                     <span id="degWind">SW</span>
+
+                    </div>
+                <h2 style="font-size: 24px;">Visibility</h2>
+                <div id="visStats">
+                    <div id="visiValue">10.0km</div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="/script.js"></script>
