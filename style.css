@@ -62,3 +62,13 @@ button:focus {
     border-radius:  10px;
     margin: 10px;
 }
+#moreInfoTable {
+    table-layout: fixed;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+td{
+    padding-top: 20px;
+    font-size: 18px;
+}

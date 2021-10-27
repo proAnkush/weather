@@ -1,3 +1,4 @@
+
 let cityInput = document.getElementById("cityInput");
 let goFetchButton = document.getElementById("goFetch");
 let city = cityInput.value;
@@ -21,7 +22,6 @@ goFetchButton.onclick = function () {
 
 function initiate(city) {
     if(city == "") return;
-    document.getElementById("dateTime").textContent = new Date().toDateString();
     getResponse();
 
 }
@@ -40,8 +40,9 @@ async function getResponse() {
     const response = await fetch( url, {mode: "cors", units: "metric"});
     const weatherData = await response.json();
     console.log(weatherData);
-    document.getElementById("cityState").textContent = weatherData.name + ", " + weatherData.sys.country;
+    document.getElementById("cityState").textContent = weatherData.name + ", " + await fullCountry(weatherData.sys.country); 
     document.getElementById("tempValue").textContent = weatherData.main.temp + u;
+    dateTime(weatherData.timezone);
     // weather icon src example = http://openweathermap.org/img/wn/10d@2x.png
     document.getElementById("cTimg").src = "http://openweathermap.org/img/wn/" + weatherData.weather[0].icon + "@2x.png";
     // Feels like 10°C. Scattered clouds. Gentle Breeze
@@ -50,6 +51,9 @@ async function getResponse() {
     document.getElementById("spdWind").textContent = weatherData.wind.speed + "m/s";
     document.getElementById("degWind").textContent = degToCompass(weatherData.wind.deg);
     document.getElementById("visiValue").textContent = (weatherData.visibility/1000 + "km") || ("6.3km");
+    document.getElementById("sunrise").textContent = timeConverter(weatherData.sys.sunrise);
+
+    document.getElementById("sunset").textContent = timeConverter(weatherData.sys.sunset);
 }
 
 function degToCompass(num) {
@@ -57,3 +61,39 @@ function degToCompass(num) {
     var arr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
     return arr[(val % 16)];
 }
+function dateTime(tz){
+    let cell = document.getElementById("dateTime");
+    let date = new Date();
+    date = new Date(date.getTime() + (date.getTimezoneOffset() * 60000) + (1000 * tz));
+    let day = date.toUTCString().substring(0, 3);
+    let dc = date.getDate();
+    let dm = date.toUTCString().substring(8, 11);
+    let m = date.getMinutes();
+    let h = date.getHours() ;
+    cell.textContent = (day + " " + dc + ", " + h + ": " + m)
+}
+function timeConverter(UNIX_timestamp){
+    // utc to human readable time ..
+    var a = new Date(UNIX_timestamp * 1000);
+    var hour = a.getHours();
+    var min = a.getMinutes();
+    var sec = a.getSeconds();
+    var time = hour + ':' + min + ':' + sec ;
+    return time;
+}
+async function fullCountry(code) {
+    //http://api.worldbank.org/v2/country/br?format=json
+    let url = "http://api.worldbank.org/v2/country/" + code + "?format=json";
+    let response = await fetch(url, {mode: "cors"});
+    let data = await response.json();
+    let name = await data[1][0].name;
+    return name;
+}
+
+cityInput.addEventListener("keyup", function(event) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        goFetchButton.click();
+    }
+});

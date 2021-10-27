@@ -44,17 +44,29 @@
                 </div>
             </div>
             <div class="card">
-                <h2 style="font-size: 24px;">Wind</h2>
-                <div id="windStats">
-                        
-                    <div> <i class="fa fa-wind" style="font-size: 20px; padding-right: 10px;" aria-hidden="true"></i><span id="spdWind">1.5m/s</span> 
-                     <span id="degWind">SW</span>
-
-                    </div>
-                <h2 style="font-size: 24px;">Visibility</h2>
-                <div id="visStats">
-                    <div id="visiValue">10.0km</div>
-                </div>
+                <table id="moreInfoTable">
+                    <tbody>
+                        <tr>
+                            <td style="text-align: left;">Wind &nbsp;<i class="fa fa-wind" style="font-size: 20px; padding-right: 10px;" aria-hidden="true"></i></td>
+                                <td ><span id="spdWind">1.5m/s</span> 
+                                    <span id="degWind">SW</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Visibility</td>
+                            <td><div id="visiValue">10.0km</div></td>
+                            
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Sunrise</td>
+                            <td><div id="sunrise">6 AM</div></td>
+                            
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Sunset</td>
+                            <td><div id="sunset">6 PM</div></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
