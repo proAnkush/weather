@@ -26,38 +26,52 @@ function initiate(city) {
 
 }
 async function getResponse() {
+    
     document.getElementById("loadingScreen").style.visibility = "visible";
     let apiKey = "eb57036f7021cf149bdf747d11dc1ef5";
     //https://api.openweathermap.org/data/2.5/weather?q=london&appid=eb57036f7021cf149bdf747d11dc1ef5
     // api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
     let u = "\xB0F";
     let url = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=" + apiKey;
+    console.log(url);
     if(metric){
     //https://api.openweathermap.org/data/2.5/weather?q=london&appid=eb57036f7021cf149bdf747d11dc1ef5&units=metric
         url = url + "&units=metric";
         u = "\xB0C"
     }
     // console.log(url);
-    const response = await fetch( url, {mode: "cors", units: "metric"});
-    const weatherData = await response.json();
-    console.log(weatherData);
-    document.getElementById("cityState").textContent = weatherData.name + ", " + await fullCountry(weatherData.sys.country); 
-    document.getElementById("tempValue").textContent = weatherData.main.temp + u;
-    dateTime(weatherData.timezone);
-    // weather icon src example = http://openweathermap.org/img/wn/10d@2x.png
-    document.getElementById("cTimg").src = "https://openweathermap.org/img/wn/" + weatherData.weather[0].icon + "@2x.png";
-    // Feels like 10°C. Scattered clouds. Gentle Breeze
-    document.getElementById("extraInfo").textContent = "Feels like " + weatherData.main.feels_like + u+". " + weatherData.weather[0].main+". " + weatherData.weather[0].description; 
-    document.getElementById("moreExtra").textContent = "Humidity: " + weatherData.main.humidity + "% ";
-    document.getElementById("spdWind").textContent = weatherData.wind.speed + "m/s";
-    document.getElementById("degWind").textContent = degToCompass(weatherData.wind.deg);
-    document.getElementById("visiValue").textContent = (weatherData.visibility/1000 + "km") || ("6.3km");
-    document.getElementById("sunrise").textContent = timeConverter(weatherData.sys.sunrise);
-    document.getElementById("sunset").textContent = timeConverter(weatherData.sys.sunset);
-    document.getElementById("minTemp").textContent = weatherData.main.temp_min;
-    document.getElementById("maxTemp").textContent = weatherData.main.temp_max;
-    document.getElementById("loadingScreen").style.visibility = "hidden";
+    try{
+        // hide
+        document.getElementById("loadingScreen").style.visibility = "visible";
+        document.getElementById("errorScreen").style.visibility = "hidden";
 
+        const response = await fetch( url, {mode: "cors", units: "metric"});
+        const weatherData = await response.json();
+        console.log(weatherData);
+        document.getElementById("cityState").textContent = weatherData.name + ", " + await fullCountry(weatherData.sys.country); 
+        document.getElementById("tempValue").textContent = weatherData.main.temp + u;
+        dateTime(weatherData.timezone);
+        // weather icon src example = http://openweathermap.org/img/wn/10d@2x.png
+        document.getElementById("cTimg").src = "https://openweathermap.org/img/wn/" + weatherData.weather[0].icon + "@2x.png";
+        // Feels like 10°C. Scattered clouds. Gentle Breeze
+        document.getElementById("extraInfo").textContent = "Feels like " + weatherData.main.feels_like + u+". " + weatherData.weather[0].main+". " + weatherData.weather[0].description; 
+        document.getElementById("moreExtra").textContent = "Humidity: " + weatherData.main.humidity + "% ";
+        document.getElementById("spdWind").textContent = weatherData.wind.speed + "m/s";
+        document.getElementById("degWind").textContent = degToCompass(weatherData.wind.deg);
+        document.getElementById("visiValue").textContent = (weatherData.visibility/1000 + "km") || ("6.3km");
+        document.getElementById("sunrise").textContent = timeConverter(weatherData.sys.sunrise);
+        document.getElementById("sunset").textContent = timeConverter(weatherData.sys.sunset);
+        document.getElementById("minTemp").textContent = weatherData.main.temp_min;
+        document.getElementById("maxTemp").textContent = weatherData.main.temp_max;
+        document.getElementById("loadingScreen").style.visibility = "hidden";
+    }catch(error){
+        // show appropriate
+        document.getElementById("errorScreen").style.visibility = "visible";
+        document.getElementById("loadingScreen").style.visibility = "hidden";
+
+
+        return;
+    }
 }
 
 function degToCompass(num) {
