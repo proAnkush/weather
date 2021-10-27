@@ -26,6 +26,7 @@ function initiate(city) {
 
 }
 async function getResponse() {
+    document.getElementById("loadingScreen").style.visibility = "visible";
     let apiKey = "eb57036f7021cf149bdf747d11dc1ef5";
     //https://api.openweathermap.org/data/2.5/weather?q=london&appid=eb57036f7021cf149bdf747d11dc1ef5
     // api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
@@ -52,8 +53,11 @@ async function getResponse() {
     document.getElementById("degWind").textContent = degToCompass(weatherData.wind.deg);
     document.getElementById("visiValue").textContent = (weatherData.visibility/1000 + "km") || ("6.3km");
     document.getElementById("sunrise").textContent = timeConverter(weatherData.sys.sunrise);
-
     document.getElementById("sunset").textContent = timeConverter(weatherData.sys.sunset);
+    document.getElementById("minTemp").textContent = weatherData.main.temp_min;
+    document.getElementById("maxTemp").textContent = weatherData.main.temp_max;
+    document.getElementById("loadingScreen").style.visibility = "hidden";
+
 }
 
 function degToCompass(num) {
