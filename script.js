@@ -44,7 +44,7 @@ async function getResponse() {
     document.getElementById("tempValue").textContent = weatherData.main.temp + u;
     dateTime(weatherData.timezone);
     // weather icon src example = http://openweathermap.org/img/wn/10d@2x.png
-    document.getElementById("cTimg").src = "http://openweathermap.org/img/wn/" + weatherData.weather[0].icon + "@2x.png";
+    document.getElementById("cTimg").src = "https://openweathermap.org/img/wn/" + weatherData.weather[0].icon + "@2x.png";
     // Feels like 10°C. Scattered clouds. Gentle Breeze
     document.getElementById("extraInfo").textContent = "Feels like " + weatherData.main.feels_like + u+". " + weatherData.weather[0].main+". " + weatherData.weather[0].description; 
     document.getElementById("moreExtra").textContent = "Humidity: " + weatherData.main.humidity + "% ";
@@ -83,7 +83,7 @@ function timeConverter(UNIX_timestamp){
 }
 async function fullCountry(code) {
     //http://api.worldbank.org/v2/country/br?format=json
-    let url = "http://api.worldbank.org/v2/country/" + code + "?format=json";
+    let url = "https://api.worldbank.org/v2/country/" + code + "?format=json";
     let response = await fetch(url, {mode: "cors"});
     let data = await response.json();
     let name = await data[1][0].name;
