@@ -39,10 +39,11 @@ button:focus {
     padding: none;
 }
 #dynamicMain{
+    flex-direction: row;
     width: 60%;
     margin: auto;
-    /* border-left: 2px dashed blue;
-    border-right: 2px dashed blue; */
+    border-left: 2px dashed blue;
+    border-right: 2px dashed blue;
     padding: 30px;
 }
 #dateTime{
@@ -102,7 +103,6 @@ td{
     display: flex;
     flex-direction: row;
     overflow-x: auto;
-    width: 400px;
     height: 250px;
 }
 .hCard{
@@ -122,4 +122,9 @@ td{
     width: 75px;
     height: 75px; 
     margin: auto;
+}
+#dailyTableDiv{
+    width: 90%;
+    margin: auto;
+    margin-top: 100px;
 }

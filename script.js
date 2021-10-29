@@ -7,7 +7,7 @@ let goFetchButton = document.getElementById("goFetch");
 let city = cityInput.value;
 let u = "\xB0F";
 // if metric is true, the api will be called with unit parameter set to metric giving output in celcius
-let metric = true;
+let metric = Boolean(localStorage.getItem("metric"));
 
 window.onload = function () {
     city = "bangalore";
@@ -16,6 +16,14 @@ window.onload = function () {
 
 document.getElementById("metricSwitch").onclick = function () {
     metric = !(metric);
+    if(metric){
+        document.getElementById("metricSwitch").innerHTML = "<b>&deg;C</b>/&deg; F";
+        u = "\xB0C";
+    }
+    else{
+        document.getElementById("metricSwitch").innerHTML = "&deg;C/<b>&deg;F</b>";
+        u = "\xB0F";
+    }
     initiate(city);
 }
 
@@ -38,13 +46,11 @@ async function getResponse() {
     document.getElementById("loadingScreen").style.visibility = "visible";
     let apiKey = "eb57036f7021cf149bdf747d11dc1ef5";
     //https://api.openweathermap.org/data/2.5/weather?q=london&appid=eb57036f7021cf149bdf747d11dc1ef5
-    // api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
     
     let url = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=" + apiKey;
     console.log(url);
+    u = "\xB0F";
     if(metric){
-        //https://api.openweathermap.org/data/2.5/weather?q=london&appid=eb57036f7021cf149bdf747d11dc1ef5&units=metric
-        // https://api.openweathermap.org/data/2.5/onecall/timemachine?lat={lat}&lon={lon}&appid={API key}
         url = url + "&units=metric";
         u = "\xB0C"
     }
@@ -64,7 +70,7 @@ async function getResponse() {
         document.getElementById("cTimg").src = "https://openweathermap.org/img/wn/" + weatherData.weather[0].icon + "@2x.png";
         // Feels like 10°C. Scattered clouds. Gentle Breeze
         document.getElementById("extraInfo").textContent = "Feels like " + weatherData.main.feels_like + u+". " + weatherData.weather[0].main+". " + weatherData.weather[0].description; 
-        document.getElementById("moreExtra").textContent = "Humidity: " + weatherData.main.humidity + "% ";
+        document.getElementById("moreExtra").innerHTML = "<b>Humidity:</b> " + weatherData.main.humidity + "% " + "<b>High:</b> " + weatherData.main.temp_max + u + " <b>Low:</b> " + weatherData.main.temp_min;
 
         // more info card
         document.getElementById("spdWind").textContent = weatherData.wind.speed + "m/s";
@@ -72,8 +78,6 @@ async function getResponse() {
         document.getElementById("visiValue").textContent = (weatherData.visibility/1000 + "km") || ("6.3km");
         document.getElementById("sunrise").textContent = timeConverter(weatherData.sys.sunrise);
         document.getElementById("sunset").textContent = timeConverter(weatherData.sys.sunset);
-        document.getElementById("minTemp").textContent = weatherData.main.temp_min;
-        document.getElementById("maxTemp").textContent = weatherData.main.temp_max;
         
         
         
@@ -92,11 +96,11 @@ async function getResponse() {
         let hourly = document.getElementById("hourly");
         hourly.innerHTML = "";
         for(let i = 0 ; i < hout.length; i++){
-            console.log(hout[i]);
-            
             hourly.appendChild(createHFCcard(hout[i], i == 0));
         }
         // end
+
+        // Daily forecase table
 
         
         console.log("ocur");
@@ -121,7 +125,11 @@ function createHFCcard(hour, now) {
     let date = new Date();
     date = timeConverter(hour.dt);
     t.textContent = (date.charAt(1) ==':') ? date.substring(0,1) : date.substring(0,2);
-    if(now) t.textContent = "Now";
+    if(now) {
+        t.textContent = "Now";
+        console.log(hour.pop * 100);
+        document.getElementById("cor").innerHTML = "<b>Chance Of Rain:</b> " + (hour.pop * 100) + "%";
+    }
     hCard.appendChild(t);
     let i = document.createElement("img");
     i.classList.add("hcImg");
@@ -130,7 +138,6 @@ function createHFCcard(hour, now) {
     hCard.appendChild(i);
     let temp = document.createElement("span");
     temp.classList.add("hcTemp");
-    console.log(date.substring(0, 2));
     temp.textContent = hour.temp + u;
     hCard.appendChild(temp);
     return hCard;

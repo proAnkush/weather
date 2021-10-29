@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAA0vkAAAAAAADX/wAAWPYAAFLnACsqKwAAWvwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEREREREREREREREWYRERERERZjFmFhEREREWNmZmFhERZmYCImZmEREWYgESJmEREWYiEiEiYWEWZiICIiJmYRYWIlIhImYREUQiIiIiYRERZmICIiZhYRFhZiIiZmYRERFmNmZmEREREWFmEWZhERERERZhERERERERERERERH//wAA/n8AAPEvAAD4CwAAwAMAAOAHAADABQAAgAEAAKADAADABwAAwAUAANADAADwDwAA9McAAP5/AAD//wAA" rel="icon" type="image/x-icon" />
         <meta charset="UTF-8">
         <link rel="stylesheet" href="style.css">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,7 +27,7 @@
                 <button id="refresh" style="border:0px; background: white; margin-left: 0; color: black; padding: 6px;"><i class="fa fa-refresh" style="font-size: 24px;" aria-hidden="true"></i></button>
             </li>
             <li>
-                <button id="metricSwitch" style="font-size: 24px; border: 0px;">C &deg;/ F &deg;</button>
+                <button id="metricSwitch" style="font-size: 24px; border: 0px;"><b>&deg;C</b>/&deg; F</button>
             </li>
         </ul>
     </div>
@@ -50,6 +51,9 @@
                     UV:0
                     Dew point:9°C
                     Visibility:10.0km
+                </div>
+                <div id="cor">
+                    help
                 </div>
             </div>
             <!-- Secondary info -->
@@ -77,19 +81,11 @@
                             <td style="text-align: left;">Sunset</td>
                             <td><div id="sunset">6 PM</div></td>
                         </tr>
-                        <tr>
-                            <td style="text-align: left;">Min Temperature</td>
-                            <td><div id="minTemp">1</div></td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left;">Max Temperature</td>
-                            <td><div id="maxTemp">100</div></td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
             <!-- hourly forecast -->
-            <div class="card" >
+            <div style="padding-top: 3%; margin: 10px; width: 40%; text-align: -webkit-center;" >
                 <div class="secondaryHeading" style="font-size: 24px; font-weight: bold;  text-align: center;">48 Hour Hourly Forecast</div>
                 <div id="hourly">
                     <div class="hCard">
@@ -102,6 +98,27 @@
                 </div>
 
             </div>
+            
+        </div>
+        <div id="dailyTableDiv">
+            <table id="dailyTable" style="width: 100%; table-layout: fixed; text-align: center; overflow: hidden; text-overflow: ellipsis; border: 2px solid black;">
+                <tr>
+                    <th>Day</th>
+                    <th>Weather</th>
+                    <th>Temperature</th>
+                    <th>Chance Of Rain</th>
+                    <th>Wind</th>
+                </tr>
+                <tr>
+                    <td>Sunday</td>
+                    <td>Good</td>
+                    <td>10degC</td>
+                    <td>100%</td>
+                    <td>10m/s N</td>
+                </tr>
+                
+            </table>
+
         </div>
     </div>
     
