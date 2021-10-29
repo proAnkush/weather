@@ -11,10 +11,10 @@
         <meta name="description" content="Weather project">
         <meta name="keywords" content="HTML, CSS, JavaScript, Open Weather API">
         <meta name="author" content="Ankush Patil">
+        <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/logo_60x60.png" sizes="60x60" type="image/png">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Merienda&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
 <body>
@@ -87,7 +87,7 @@
             </div>
             <!-- hourly forecast -->
             <div style="padding-top: 3%; margin: 10px; width: 40%; text-align: -webkit-center;" >
-                <div class="secondaryHeading" style="font-size: 24px; font-weight: bold;  text-align: center;">48 Hour Hourly Forecast</div>
+                <div class="secondaryHeading" style=" font-weight: bold;  text-align: center;">48 Hour Hourly Forecast</div>
                 <div id="hourly">
                     <div class="hCard">
                         <span class="hcHead">Now</span>
@@ -102,7 +102,9 @@
             
         </div>
         <div id="dailyTableDiv">
-            <table id="dailyTable" style="width: 100%; table-layout: fixed; text-align: center; overflow: hidden; text-overflow: ellipsis; border: 2px solid black;">
+            <div class="secondaryHeading" style=" font-weight: bold;  text-align: center;">8 Day Daily Forecast</div>
+
+            <table id="dailyTable" style="width: 100%; table-layout: fixed; text-align: center; overflow: hidden; text-overflow: ellipsis;">
                 <tr>
                     <th>Day</th>
                     <th>Weather</th>
@@ -112,7 +114,7 @@
                 </tr>
                 <tr>
                     <td>Sunday</td>
-                    <td>Good</td>
+                    <td>Icon</td>
                     <td>10degC</td>
                     <td>100%</td>
                     <td>10m/s N</td>

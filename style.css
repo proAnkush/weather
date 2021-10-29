@@ -4,6 +4,7 @@ body{
 :root{
     --main-theme-col: darkslategrey;
     --sec-theme-col: white;
+    font-family: "Varela Round";
 }
 #topbar{
     font-size: 30px;
@@ -15,7 +16,7 @@ body{
     color: var(--sec-theme-col);
 }
 .secondaryHeading{
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
     text-align: center;
 }
@@ -42,8 +43,8 @@ button:focus {
     flex-direction: row;
     width: 60%;
     margin: auto;
-    border-left: 2px dashed blue;
-    border-right: 2px dashed blue;
+    /* border-left: 2px dashed blue;
+    border-right: 2px dashed blue; */
     padding: 30px;
 }
 #dateTime{
@@ -53,6 +54,7 @@ button:focus {
 
 #cityState{
     font-size: 50px;
+    font-family:Arial, Helvetica, sans-serif;
     text-transform: capitalize;
 }
 #currTemp{
@@ -128,4 +130,15 @@ td{
     width: 90%;
     margin: auto;
     margin-top: 100px;
+}
+#dailyTable > tr > th{
+    font-size: 24px;
+    opacity: 70%;
+}
+#dailyTable > tr > td:nth-of-type(1){
+    font-weight: bold;
+    font-size: 20px;
+}
+#dailyTable > tr > td{
+    border: 0px;
 }

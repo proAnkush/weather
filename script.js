@@ -1,6 +1,5 @@
 
 // to do - clean up
-// to do - remove logs
 
 let cityInput = document.getElementById("cityInput");
 let goFetchButton = document.getElementById("goFetch");
@@ -48,13 +47,11 @@ async function getResponse() {
     //https://api.openweathermap.org/data/2.5/weather?q=london&appid=eb57036f7021cf149bdf747d11dc1ef5
     
     let url = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=" + apiKey;
-    console.log(url);
     u = "\xB0F";
     if(metric){
         url = url + "&units=metric";
         u = "\xB0C"
     }
-    // console.log(url);
     try{
         // hide
         document.getElementById("loadingScreen").style.visibility = "visible";
@@ -62,7 +59,6 @@ async function getResponse() {
         
         const response = await fetch( url, {mode: "cors", units: "metric"});
         const weatherData = await response.json();
-        console.log(weatherData);
         document.getElementById("cityState").textContent = weatherData.name + ", " + await fullCountry(weatherData.sys.country); 
         document.getElementById("tempValue").textContent = weatherData.main.temp + u;
         dateTime(weatherData.timezone);
@@ -101,10 +97,14 @@ async function getResponse() {
         // end
 
         // Daily forecase table
-
+        let daily = document.getElementById("dailyTable");
+        let dout = ocData.daily;
+        daily.innerHTML = "";
+        addDTHead();
+        for(let i = 0; i < dout.length; i++){
+            daily.appendChild(createDFCcard(dout[i]));
+        }
         
-        console.log("ocur");
-        console.log(ocData);
         // hide loading screen
         document.getElementById("loadingScreen").style.visibility = "hidden";
         
@@ -114,6 +114,66 @@ async function getResponse() {
         document.getElementById("loadingScreen").style.visibility = "hidden";
         return;
     }
+}
+
+function addDTHead() {
+
+    let Table = document.getElementById("dailyTable");
+    let tr = document.createElement("tr");
+    let th = document.createElement("th");
+    th.textContent = "Day";
+    tr.appendChild(th);
+
+
+    th = document.createElement("th");
+    th.textContent = "Weather";
+    tr.appendChild(th);
+
+    th = document.createElement("th");
+    th.textContent = "Temperature";
+    tr.appendChild(th);
+
+    th = document.createElement("th");
+    th.textContent = "Chance of Rain";
+    tr.appendChild(th);
+
+    th = document.createElement("th");
+    th.textContent = "Wind";
+    tr.appendChild(th);
+    Table.appendChild(tr)
+}
+
+function createDFCcard(day) {
+    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    let tr = document.createElement("tr");
+    let tdD = document.createElement("td");
+    let date = days[new Date(day.dt*1000).getDay()];
+    tdD.textContent = date;
+    tr.appendChild(tdD);
+
+    let tdWt = document.createElement("td");
+    let img = document.createElement("img");
+    img.classList.add("hcImg");
+    img.src = "https://openweathermap.org/img/wn/" + day.weather[0].icon + "@2x.png";
+    tdWt.appendChild(img);
+    tr.appendChild(tdWt);
+
+    let tdT = document.createElement("td");
+    tdT.textContent = day.temp["day"];
+    tr.appendChild(tdT);
+
+
+    let tdC = document.createElement("td");
+    tdC.textContent = day.pop*100 + "%";
+    tr.appendChild(tdC);
+
+
+    let tdWd = document.createElement("td");
+    tdWd.textContent = day.wind_speed + "m/s " + degToCompass(day.wind_deg) ;
+    tr.appendChild(tdWd);
+
+    return tr;
+
 }
 
 function createHFCcard(hour, now) {
@@ -127,7 +187,6 @@ function createHFCcard(hour, now) {
     t.textContent = (date.charAt(1) ==':') ? date.substring(0,1) : date.substring(0,2);
     if(now) {
         t.textContent = "Now";
-        console.log(hour.pop * 100);
         document.getElementById("cor").innerHTML = "<b>Chance Of Rain:</b> " + (hour.pop * 100) + "%";
     }
     hCard.appendChild(t);
