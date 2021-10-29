@@ -23,6 +23,7 @@
             <li id="form" style="background-color: white; ">
                 <input id="cityInput" type="text" style="border: 0px; font-size: 24px; padding: 6px; padding-left: 16px;" name="city" placeholder="Weather of your city">
                 <button id="goFetch" style="border:0px; background: white; margin-left: 0; color: black; padding: 6px;"> <i class="fa fa-search" style="font-size: 24px;" aria-hidden="true"></i> </button>
+                <button id="refresh" style="border:0px; background: white; margin-left: 0; color: black; padding: 6px;"><i class="fa fa-refresh" style="font-size: 24px;" aria-hidden="true"></i></button>
             </li>
             <li>
                 <button id="metricSwitch" style="font-size: 24px; border: 0px;">C &deg;/ F &deg;</button>
@@ -33,13 +34,17 @@
         <h1 style="margin: auto; width: 900px;"> An error encountered with the api call, please check your internet connection, or try again after some time. Or maybe the city doesn't exist.</h1>
         <img style="width: 600px; height: 500px; margin: auto;" src="/resources/error.gif" alt="john travolta looking for something he cant seem to find.">
     </div>
+    <div id="loadingScreen">
+        <img src="/resources/load.gif" alt="The dreaded loading screen" srcset="" style="place-content: center;">
+    </div>
     <div id="dynamicMain">
         <div id="cards">
+            <!-- Main info -->
             <div class="card">
                 <div id="dateTime">Date/Time</div>
                 <div id="cityState">City, State</div>
                 <div id="currTemp"><img id="cTimg" src="http://openweathermap.org/img/wn/10d@2x.png" style="width: 60px; height: 60px;"> <span id="tempValue">10 &deg; C</span></div>
-                <div id="extraInfo" style="font-size: 20px; font-weight: bold;">Feels like 10°C. Scattered clouds. Gentle Breeze</div>
+                <div id="extraInfo" style="font-size: 20px; font-weight: bold; overflow-x: auto;">Feels like 10°C. Scattered clouds. Gentle Breeze</div>
                 <div id="moreExtra">
                     Humidity:95%
                     UV:0
@@ -47,7 +52,10 @@
                     Visibility:10.0km
                 </div>
             </div>
+            <!-- Secondary info -->
             <div class="card">
+                <div class="secondaryHeading">More Info</div>
+
                 <table id="moreInfoTable">
                     <tbody>
                         <tr>
@@ -80,12 +88,23 @@
                     </tbody>
                 </table>
             </div>
+            <!-- hourly forecast -->
+            <div class="card" >
+                <div class="secondaryHeading" style="font-size: 24px; font-weight: bold;  text-align: center;">48 Hour Hourly Forecast</div>
+                <div id="hourly">
+                    <div class="hCard">
+                        <span class="hcHead">Now</span>
+                        <img class="hcImg" src="https://openweathermap.org/img/wn/10d@4x.png" alt="forecast icon">
+                        <span class="hcTemp">15&deg;C</span>
+                        
+                    </div>
+                    
+                </div>
+
+            </div>
         </div>
     </div>
-    <div id="loadingScreen">
-        <img src="/resources/load.gif" alt="The dreaded loading screen" srcset="" style="margin: auto; width: 900px;">
-
-    </div>
+    
     
     <script src="script.js"></script>
 </body>

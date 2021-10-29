@@ -1,7 +1,11 @@
 
+// to do - clean up
+// to do - remove logs
+
 let cityInput = document.getElementById("cityInput");
 let goFetchButton = document.getElementById("goFetch");
 let city = cityInput.value;
+let u = "\xB0F";
 // if metric is true, the api will be called with unit parameter set to metric giving output in celcius
 let metric = true;
 
@@ -12,6 +16,10 @@ window.onload = function () {
 
 document.getElementById("metricSwitch").onclick = function () {
     metric = !(metric);
+    initiate(city);
+}
+
+document.getElementById("refresh").onclick = function () {
     initiate(city);
 }
 
@@ -31,11 +39,12 @@ async function getResponse() {
     let apiKey = "eb57036f7021cf149bdf747d11dc1ef5";
     //https://api.openweathermap.org/data/2.5/weather?q=london&appid=eb57036f7021cf149bdf747d11dc1ef5
     // api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
-    let u = "\xB0F";
+    
     let url = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=" + apiKey;
     console.log(url);
     if(metric){
-    //https://api.openweathermap.org/data/2.5/weather?q=london&appid=eb57036f7021cf149bdf747d11dc1ef5&units=metric
+        //https://api.openweathermap.org/data/2.5/weather?q=london&appid=eb57036f7021cf149bdf747d11dc1ef5&units=metric
+        // https://api.openweathermap.org/data/2.5/onecall/timemachine?lat={lat}&lon={lon}&appid={API key}
         url = url + "&units=metric";
         u = "\xB0C"
     }
@@ -44,7 +53,7 @@ async function getResponse() {
         // hide
         document.getElementById("loadingScreen").style.visibility = "visible";
         document.getElementById("errorScreen").style.visibility = "hidden";
-
+        
         const response = await fetch( url, {mode: "cors", units: "metric"});
         const weatherData = await response.json();
         console.log(weatherData);
@@ -56,6 +65,8 @@ async function getResponse() {
         // Feels like 10°C. Scattered clouds. Gentle Breeze
         document.getElementById("extraInfo").textContent = "Feels like " + weatherData.main.feels_like + u+". " + weatherData.weather[0].main+". " + weatherData.weather[0].description; 
         document.getElementById("moreExtra").textContent = "Humidity: " + weatherData.main.humidity + "% ";
+
+        // more info card
         document.getElementById("spdWind").textContent = weatherData.wind.speed + "m/s";
         document.getElementById("degWind").textContent = degToCompass(weatherData.wind.deg);
         document.getElementById("visiValue").textContent = (weatherData.visibility/1000 + "km") || ("6.3km");
@@ -63,15 +74,66 @@ async function getResponse() {
         document.getElementById("sunset").textContent = timeConverter(weatherData.sys.sunset);
         document.getElementById("minTemp").textContent = weatherData.main.temp_min;
         document.getElementById("maxTemp").textContent = weatherData.main.temp_max;
+        
+        
+        
+        // one call = oc
+        // https://api.openweathermap.org/data/2.5/onecall?lat=12.9762&lon=77.6033&appid=eb57036f7021cf149bdf747d11dc1ef5
+        let ocurl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + weatherData.coord.lat + "&lon=" + weatherData.coord.lon + "&appid=" + apiKey;
+        if(metric){
+            ocurl = ocurl + "&units=metric";
+        }
+        const ocResponse = await fetch(ocurl, {mode: "cors"});
+        const ocData = await ocResponse.json();
+        // end
+        
+        // hourly forecast populate
+        let hout = ocData.hourly;
+        let hourly = document.getElementById("hourly");
+        hourly.innerHTML = "";
+        for(let i = 0 ; i < hout.length; i++){
+            console.log(hout[i]);
+            
+            hourly.appendChild(createHFCcard(hout[i], i == 0));
+        }
+        // end
+
+        
+        console.log("ocur");
+        console.log(ocData);
+        // hide loading screen
         document.getElementById("loadingScreen").style.visibility = "hidden";
+        
     }catch(error){
         // show appropriate
         document.getElementById("errorScreen").style.visibility = "visible";
         document.getElementById("loadingScreen").style.visibility = "hidden";
-
-
         return;
     }
+}
+
+function createHFCcard(hour, now) {
+    let hCard = document.createElement('hCard');
+    hCard.classList.add("hCard");
+    let t = document.createElement("span");
+    t.classList.add("hcHead");
+
+    let date = new Date();
+    date = timeConverter(hour.dt);
+    t.textContent = (date.charAt(1) ==':') ? date.substring(0,1) : date.substring(0,2);
+    if(now) t.textContent = "Now";
+    hCard.appendChild(t);
+    let i = document.createElement("img");
+    i.classList.add("hcImg");
+    i.setAttribute("alt", "forecast icon");
+    i.src = "https://openweathermap.org/img/wn/" + hour.weather[0].icon + "@2x.png";
+    hCard.appendChild(i);
+    let temp = document.createElement("span");
+    temp.classList.add("hcTemp");
+    console.log(date.substring(0, 2));
+    temp.textContent = hour.temp + u;
+    hCard.appendChild(temp);
+    return hCard;
 }
 
 function degToCompass(num) {
