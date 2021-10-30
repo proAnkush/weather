@@ -92,15 +92,15 @@ td{
     justify-content: center;
 }
 #errorScreen{
+    z-index: 1000;
     display: flex;
     flex-direction: column;
     position: absolute;
     left: 0;
     visibility: hidden;
     width: 100%;
-    height: 1080px;
+    height: 2000px;
     background: white;
-    justify-content: center;
 }
 #hourly{
     display: flex;

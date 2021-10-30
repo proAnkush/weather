@@ -3,14 +3,19 @@
 
 let cityInput = document.getElementById("cityInput");
 let goFetchButton = document.getElementById("goFetch");
-let city = cityInput.value;
+let city = "";
+if(localStorage.getItem("city") || localStorage.getItem("city") == null){
+    city = String(localStorage.getItem("city"));
+}else{
+    city = "bangalore";
+}
 let u = "\xB0F";
 // if metric is true, the api will be called with unit parameter set to metric giving output in celcius
-let metric = Boolean(localStorage.getItem("metric"));
+let metric = true;
 
 window.onload = function () {
-    city = "bangalore";
-    initiate("bangalore");
+    city = localStorage.getItem("city") || "bangalore";
+    initiate(city);
 }
 
 document.getElementById("metricSwitch").onclick = function () {
@@ -27,21 +32,22 @@ document.getElementById("metricSwitch").onclick = function () {
 }
 
 document.getElementById("refresh").onclick = function () {
+    localStorage.setItem("city", city);
     initiate(city);
 }
 
 goFetchButton.onclick = function () {
     city = cityInput.value;
+    localStorage.setItem("city", city);
     initiate(city);
 }
 
 function initiate(city) {
-    if(city == "") return;
+    if(!city) return;
     getResponse();
-
 }
 async function getResponse() {
-    
+    localStorage.setItem("city", city);
     document.getElementById("loadingScreen").style.visibility = "visible";
     let apiKey = "eb57036f7021cf149bdf747d11dc1ef5";
     //https://api.openweathermap.org/data/2.5/weather?q=london&appid=eb57036f7021cf149bdf747d11dc1ef5
@@ -159,7 +165,7 @@ function createDFCcard(day) {
     tr.appendChild(tdWt);
 
     let tdT = document.createElement("td");
-    tdT.textContent = day.temp["day"];
+    tdT.textContent = day.temp["day"] + u;
     tr.appendChild(tdT);
 
 
